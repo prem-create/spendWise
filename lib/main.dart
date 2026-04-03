@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:spend_wise/pages/home_page/home_page.dart';
+
 import 'package:spend_wise/core/theme/my_theme_data.dart';
+import 'package:spend_wise/pages/main_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: myThemeData,
-      home: const HomePage(),
+      home:const MainScreen(),
     );
   }
 }
