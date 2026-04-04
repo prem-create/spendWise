@@ -1,10 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:spend_wise/core/constants/app_spacing.dart';
+import 'package:spend_wise/core/model/dummy_transaction_data.dart';
+import 'package:spend_wise/core/model/transaction_model.dart';
+import 'package:spend_wise/core/widgets/transaction_card.dart';
 import 'package:spend_wise/pages/home_page/widgets/my_app_bar.dart';
 import 'package:spend_wise/pages/home_page/widgets/my_bar_chart.dart';
+import 'package:spend_wise/pages/main_screen.dart';
+import 'package:spend_wise/pages/transaction_page/transaction_page.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget {
+  final Function(int) onChangePage;
+  const HomePage({super.key, required this.onChangePage});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final DummyTransactionData dummyTransactionData = DummyTransactionData();
+  late final List<TransactionModel> transactions;
+
+
+  @override
+  void initState() {
+    transactions = dummyTransactionData.getTransactionModel();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +33,9 @@ class HomePage extends StatelessWidget {
       appBar: MyAppBar(),
       floatingActionButton: FloatingActionButton(
         shape: CircleBorder(),
+        backgroundColor: Colors.white,
         onPressed: () {},
-        child: Icon(Icons.add),
+        child: CircleAvatar(radius: 25, child: Icon(Icons.add)),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -50,7 +72,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'WeeklySpending',
+                  'Weekly Spending',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
 
@@ -68,21 +90,37 @@ class HomePage extends StatelessWidget {
                         "Recent Transactions",
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
-                      TextButton(onPressed: () {}, child: Text("view all")),
+                      TextButton(onPressed: () {
+                        widget.onChangePage(1);
+                      }, child: Text("view all")),
                     ],
                   ),
                 ),
                 Column(
-                  children: List.generate(3, (index) {
-                    return ListTile(
-                      leading: Icon(Icons.coffee_rounded),
-                      title: Text('StarBucks Coffee'),
-                      titleTextStyle: Theme.of(context).textTheme.titleMedium,
-                      subtitle: Text('07/07/2007'),
-                      subtitleTextStyle: Theme.of(context).textTheme.titleSmall,
+                  children: List.generate(4, (index) {
+                    final tx = transactions[index];
+                    return TransactionCard(
+                      title: tx.title,
+                      iconData: tx.iconData,
+                      time: tx.time,
+                      trailing: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            "${tx.amount}",
+                            style: TextStyle(
+                              color: tx.amount < 0
+                                  ? Theme.of(context).colorScheme.error
+                                  : Colors.green,
+                            ),
+                          ),
+                        ],
+                      ),
                     );
                   }),
                 ),
+                SizedBox(height: AppSpacing.xl),
               ],
             ),
           ),

@@ -12,7 +12,24 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _index = 0;
-  List pages = [HomePage(), TransactionPage(), GoalsPage()];
+  late List pages;
+
+  void changePage(int index) {
+    setState(() {
+      _index = index;
+    });
+  }
+
+  @override
+  void initState() {
+    pages = [
+      HomePage(onChangePage: changePage),
+      TransactionPage(),
+      GoalsPage(),
+    ];
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
