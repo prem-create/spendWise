@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spend_wise/core/constants/app_spacing.dart';
-import 'package:spend_wise/core/model/dummy_transaction_data.dart';
-import 'package:spend_wise/core/model/transaction_model.dart';
+import 'package:spend_wise/core/repo/global_transaction_repository.dart';
 import 'package:spend_wise/core/widgets/transaction_card.dart';
 import 'package:spend_wise/pages/home_page/widgets/my_app_bar.dart';
 import 'package:spend_wise/pages/home_page/widgets/my_bar_chart.dart';
@@ -15,12 +14,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final DummyTransactionData dummyTransactionData = DummyTransactionData();
-  late final List<TransactionModel> transactions;
+  final GlobalTransactionRepository repo = GlobalTransactionRepository();
 
   @override
   void initState() {
-    transactions = dummyTransactionData.getTransactionModel();
     super.initState();
   }
 
@@ -96,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Column(
                   children: List.generate(4, (index) {
-                    final tx = transactions[index];
+                    final tx = repo.transactions[index];
                     return TransactionCard(
                       isborderedContainer: true,
                       title: tx.title,

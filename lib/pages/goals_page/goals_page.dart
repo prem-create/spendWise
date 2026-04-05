@@ -22,7 +22,10 @@ class _GoalsPageState extends State<GoalsPage> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: AppSpacing.sm),
-            child: Icon(Icons.more_vert_outlined),
+            child: IconButton(
+              icon: Icon(Icons.more_vert_outlined),
+              onPressed: () {},
+            ),
           ),
         ],
       ),
@@ -163,7 +166,7 @@ class _GoalsPageState extends State<GoalsPage> {
                 Container(
                   decoration: BoxDecoration(
                     border: BoxBorder.all(),
-                    borderRadius: BorderRadius.circular(AppSpacing.curve)
+                    borderRadius: BorderRadius.circular(AppSpacing.curve),
                   ),
                   child: ListTile(
                     shape: RoundedRectangleBorder(),

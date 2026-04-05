@@ -28,6 +28,7 @@ class TransactionCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppSpacing.curve),
       ),
       child: ListTile(
+        
         leading: Icon(iconData),
         title: Text(title),
         titleTextStyle: Theme.of(context).textTheme.titleMedium,
