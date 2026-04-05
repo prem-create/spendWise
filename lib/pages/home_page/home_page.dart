@@ -5,8 +5,6 @@ import 'package:spend_wise/core/model/transaction_model.dart';
 import 'package:spend_wise/core/widgets/transaction_card.dart';
 import 'package:spend_wise/pages/home_page/widgets/my_app_bar.dart';
 import 'package:spend_wise/pages/home_page/widgets/my_bar_chart.dart';
-import 'package:spend_wise/pages/main_screen.dart';
-import 'package:spend_wise/pages/transaction_page/transaction_page.dart';
 
 class HomePage extends StatefulWidget {
   final Function(int) onChangePage;
@@ -19,7 +17,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final DummyTransactionData dummyTransactionData = DummyTransactionData();
   late final List<TransactionModel> transactions;
-
 
   @override
   void initState() {
@@ -73,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Text(
                   'Weekly Spending',
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
 
                 //Bar Chart
@@ -82,24 +79,26 @@ class _HomePageState extends State<HomePage> {
                   yCoordinates: [45, 60, 30, 80, 50, 70, 40],
                 ),
                 Divider(),
-                FittedBox(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Recent Transactions",
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      TextButton(onPressed: () {
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Recent Transactions",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    TextButton(
+                      onPressed: () {
                         widget.onChangePage(1);
-                      }, child: Text("view all")),
-                    ],
-                  ),
+                      },
+                      child: Text("view all"),
+                    ),
+                  ],
                 ),
                 Column(
                   children: List.generate(4, (index) {
                     final tx = transactions[index];
                     return TransactionCard(
+                      isborderedContainer: true,
                       title: tx.title,
                       iconData: tx.iconData,
                       time: tx.time,

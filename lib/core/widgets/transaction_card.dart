@@ -6,21 +6,26 @@ class TransactionCard extends StatelessWidget {
   final IconData iconData;
   final String time;
   final Widget? trailing;
-  const TransactionCard({
+  final bool isborderedContainer;
+  final EdgeInsets margin;
+  const TransactionCard(
+    {
     super.key,
     required this.title,
     required this.iconData,
     required this.time,
     this.trailing,
+    required this.isborderedContainer,
+    this.margin = const EdgeInsets.all(AppSpacing.sm)
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: AppSpacing.sm),
+      margin: margin,
       decoration: BoxDecoration(
-        border: Border.all(),
-        borderRadius: BorderRadius.circular(AppSpacing.curve)
+        border: isborderedContainer ? Border.all() : null,
+        borderRadius: BorderRadius.circular(AppSpacing.curve),
       ),
       child: ListTile(
         leading: Icon(iconData),

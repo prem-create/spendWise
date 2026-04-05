@@ -22,9 +22,11 @@ class _TransactionPageState extends State<TransactionPage> {
     todayTx = transactions.where((tx) {
       return tx.when == "today";
     }).toList();
+
     yesterdayTx = transactions.where((tx) {
       return tx.when == "yesterday";
     }).toList();
+
     otherTx = transactions.where((tx) {
       return tx.when == "other";
     }).toList();
@@ -42,7 +44,10 @@ class _TransactionPageState extends State<TransactionPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Transactions'),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
+        actions: [Padding(
+          padding: const EdgeInsets.only(right: AppSpacing.sm),
+          child: IconButton(onPressed: () {}, icon: Icon(Icons.search)),
+        )],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -88,6 +93,7 @@ class _TransactionPageState extends State<TransactionPage> {
                       Text('Today'),
                       ...List.generate(todayTx.length, (index) {
                         return TransactionCard(
+                          isborderedContainer: true,
                           title: todayTx[index].title,
                           iconData: todayTx[index].iconData,
                           time: todayTx[index].time,
@@ -115,6 +121,7 @@ class _TransactionPageState extends State<TransactionPage> {
                       ...List.generate(
                         yesterdayTx.length,
                         (index) => TransactionCard(
+                          isborderedContainer: true,
                           title: yesterdayTx[index].title,
                           iconData: yesterdayTx[index].iconData,
                           time: yesterdayTx[index].time,
@@ -130,7 +137,7 @@ class _TransactionPageState extends State<TransactionPage> {
                                       : Colors.green,
                                 ),
                               ),
-                            ],
+                            ]
                           ),
                         ),
                       ),
@@ -141,6 +148,7 @@ class _TransactionPageState extends State<TransactionPage> {
                       ...List.generate(
                         otherTx.length,
                         (index) => TransactionCard(
+                          isborderedContainer: true,  
                           title: otherTx[index].title,
                           iconData: otherTx[index].iconData,
                           time: otherTx[index].time,
@@ -171,6 +179,3 @@ class _TransactionPageState extends State<TransactionPage> {
     );
   }
 }
-
-
-
