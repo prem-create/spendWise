@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spend_wise/core/constants/app_spacing.dart';
 import 'package:spend_wise/core/repo/global_transaction_repository.dart';
 import 'package:spend_wise/core/widgets/transaction_card.dart';
+import 'package:spend_wise/pages/add_transaction_page/add_transaction_page.dart';
 import 'package:spend_wise/pages/home_page/widgets/my_app_bar.dart';
 import 'package:spend_wise/pages/home_page/widgets/my_bar_chart.dart';
 
@@ -28,7 +29,12 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         shape: CircleBorder(),
         backgroundColor: Colors.white,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddTransactionPage()),
+          );
+        },
         child: CircleAvatar(radius: 25, child: Icon(Icons.add)),
       ),
       body: SafeArea(
