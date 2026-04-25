@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spend_wise/core/constants/app_spacing.dart';
 import 'package:spend_wise/core/model/transaction_model.dart';
 import 'package:spend_wise/core/repo/global_transaction_repository.dart';
-import 'package:spend_wise/core/widgets/transaction_card.dart';
-import 'package:spend_wise/pages/transaction_page/widget/my_dismissible_widget.dart';
+import 'package:spend_wise/pages/transaction_page/widget/categorised_transaction_card.dart';
 
 class TransactionPage extends StatefulWidget {
   const TransactionPage({super.key});
@@ -20,54 +19,19 @@ class _TransactionPageState extends State<TransactionPage> {
   late List<TransactionModel> otherTx;
 
   void categoriseTransaction() {
-    todayTx = repo.transactions.where((tx) {
-      return tx.when == "today";
-    }).toList();
+    setState(() {
+      todayTx = repo.transactions.where((tx) {
+        return tx.when == "today";
+      }).toList();
 
-    yesterdayTx = repo.transactions.where((tx) {
-      return tx.when == "yesterday";
-    }).toList();
+      yesterdayTx = repo.transactions.where((tx) {
+        return tx.when == "yesterday";
+      }).toList();
 
-    otherTx = repo.transactions.where((tx) {
-      return tx.when == "other";
-    }).toList();
-  }
-
-  Widget categorisedTransactionCard({
-    required int index,
-    required List transactionList,
-  }) {
-    return MyDismissibleWidget(
-      valuekey: ValueKey(transactionList[index]),
-      onDismissed: () {
-        {
-          return setState(() {
-            repo.deleteTransaction(transactionList[index]);
-            categoriseTransaction();
-          });
-        }
-      },
-      child: TransactionCard(
-        isborderedContainer: true,
-        title: transactionList[index].title,
-        iconData: transactionList[index].iconData,
-        time: transactionList[index].time,
-        trailing: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              "${transactionList[index].amount}",
-              style: TextStyle(
-                color: transactionList[index].amount < 0
-                    ? Theme.of(context).colorScheme.error
-                    : Colors.green,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+      otherTx = repo.transactions.where((tx) {
+        return tx.when == "other";
+      }).toList();
+    });
   }
 
   @override
@@ -131,9 +95,10 @@ class _TransactionPageState extends State<TransactionPage> {
                     if (todayTx.isNotEmpty) ...[
                       Text('Today'),
                       ...List.generate(todayTx.length, (index) {
-                        return categorisedTransactionCard(
+                        return CategorisedTransactionCard(
                           index: index,
                           transactionList: todayTx,
+                          categorisedTransaction: (categoriseTransaction),
                         );
                       }),
                     ],
@@ -143,9 +108,10 @@ class _TransactionPageState extends State<TransactionPage> {
                       Text('Yesterday'),
                       ...List.generate(
                         yesterdayTx.length,
-                        (index) => categorisedTransactionCard(
+                        (index) => CategorisedTransactionCard(
                           index: index,
                           transactionList: yesterdayTx,
+                          categorisedTransaction: (categoriseTransaction),
                         ),
                       ),
                     ],
@@ -155,9 +121,10 @@ class _TransactionPageState extends State<TransactionPage> {
                       Text('other'),
                       ...List.generate(
                         otherTx.length,
-                        (index) => categorisedTransactionCard(
+                        (index) => CategorisedTransactionCard(
                           index: index,
                           transactionList: otherTx,
+                          categorisedTransaction: (categoriseTransaction),
                         ),
                       ),
                     ],

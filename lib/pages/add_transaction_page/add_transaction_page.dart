@@ -3,6 +3,7 @@ import 'package:spend_wise/core/constants/app_spacing.dart';
 import 'package:spend_wise/core/constants/categories.dart';
 import 'package:spend_wise/core/model/transaction_model.dart';
 import 'package:spend_wise/core/repo/global_transaction_repository.dart';
+import 'package:spend_wise/core/widgets/my_alert_dialog_widget.dart';
 import 'package:spend_wise/pages/add_transaction_page/util/transaction_action.dart';
 import 'package:spend_wise/pages/add_transaction_page/widget/amount_field_widget.dart';
 import 'package:spend_wise/pages/add_transaction_page/widget/category_selector_widget.dart';
@@ -39,6 +40,34 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
     }
   }
 
+  void onSaveChangesPressed() async {
+    final DateTime currentDateTime = DateTime.now();
+
+    if (selectedCategory == null ||
+        _amountController.text.isEmpty ||
+        _amountController.text == '') {
+      await showDialog(
+        context: context,
+        builder: (context) => MyAlertDialogWidget(
+          title: "OOPS!😅 You missed filing some details",
+          iconData: Icons.question_mark_rounded,
+          voidCallback: () => Navigator.pop(context),
+        ),
+      );
+    } else {
+      repo.addTransaction(
+        TransactionModel(
+          title: selectedCategory?["name"] ?? '',
+          time: "${currentDateTime.hour}:${currentDateTime.minute}",
+          iconData: selectedCategory?["icon"],
+          amount: double.parse(_amountController.text),
+          when: "today",
+        ),
+      );
+      Navigator.pop(context);
+    }
+  }
+
   final List expenseCategories = categories.where((e) {
     return e["type"] == "expense";
   }).toList();
@@ -58,7 +87,10 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: AppSpacing.md),
-            child: TextButton(onPressed: () {}, child: Text('Save')),
+            child: TextButton(
+              onPressed: onSaveChangesPressed,
+              child: Text('Save'),
+            ),
           ),
         ],
       ),
@@ -104,20 +136,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                   ],
                 ),
                 TransactionAction(
-                  onSaveChangesPressed: () {
-                    final DateTime currentDateTime = DateTime.now();
-                    repo.addTransaction(
-                      TransactionModel(
-                        title: selectedCategory?["name"],
-                        time:
-                            "${currentDateTime.hour}:${currentDateTime.minute}",
-                        iconData: selectedCategory?["icon"],
-                        amount: double.parse(_amountController.text),
-                        when: "today",
-                      ),
-                    );
-                    Navigator.pop(context);
-                  },
+                  onSaveChangesPressed: onSaveChangesPressed,
                   onDeleteTransactionPressed: () {},
                 ),
               ],
@@ -128,3 +147,5 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
     );
   }
 }
+
+

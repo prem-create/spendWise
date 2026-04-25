@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spend_wise/core/repo/global_transaction_repository.dart';
 import 'package:lottie/lottie.dart';
+import 'package:spend_wise/core/widgets/my_alert_dialog_widget.dart';
 
 class MyDismissibleWidget extends StatefulWidget {
   final Widget child;
@@ -25,6 +26,7 @@ class _MyDismissibleWidgetState extends State<MyDismissibleWidget> {
     return Dismissible(
       key: widget.valuekey,
       direction: DismissDirection.endToStart,
+
       background: Container(
         color: Theme.of(context).colorScheme.errorContainer,
         // alignment: Alignment.centerRight,
@@ -36,9 +38,21 @@ class _MyDismissibleWidgetState extends State<MyDismissibleWidget> {
           ),
         ),
       ),
-      onDismissed: (direction) {
-        widget.onDismissed();
+      confirmDismiss: (direction) async {
+        final result = await showDialog(
+          context: context,
+          builder: (context) => MyAlertDialogWidget(
+            iconData: Icons.delete_outline_outlined,
+            title:
+                "Are you sure, you want to delete it??\n This action can't be undone!",
+            voidCallback: () {
+              Navigator.pop(context, true);
+            },
+          ),
+        );
+        return result ?? false;
       },
+      onDismissed: (direction) => widget.onDismissed(),
       child: widget.child,
     );
   }
