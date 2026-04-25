@@ -82,6 +82,8 @@ class _HomePageState extends State<HomePage> {
                   yCoordinates: [45, 60, 30, 80, 50, 70, 40],
                 ),
                 Divider(),
+
+                //Recent Transactions
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -104,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                       isborderedContainer: true,
                       title: tx.title,
                       iconData: tx.iconData,
-                      time: tx.time,
+                      dateTime: tx.dateTime,
                       trailing: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.end,

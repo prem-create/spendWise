@@ -58,10 +58,9 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
       repo.addTransaction(
         TransactionModel(
           title: selectedCategory?["name"] ?? '',
-          time: "${currentDateTime.hour}:${currentDateTime.minute}",
+          dateTime: selected ?? currentDateTime,
           iconData: selectedCategory?["icon"],
           amount: double.parse(_amountController.text),
-          when: "today",
         ),
       );
       Navigator.pop(context);
@@ -147,5 +146,3 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
     );
   }
 }
-
-

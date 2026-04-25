@@ -1,27 +1,24 @@
-
 import 'package:flutter/material.dart';
 
 class TransactionModel {
   final String title;
-  final String time;
+  final DateTime dateTime;
   final IconData iconData;
   final double amount;
-  final String when;
 
   TransactionModel({
     required this.title,
-    required this.time,
     required this.iconData,
-    required this.amount, required this.when,
+    required this.amount,
+    required this.dateTime,
   });
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) {
     return TransactionModel(
       title: json["title"],
-      time: json["time"],
+      dateTime: DateTime.parse(json["dateTime"]),
       iconData: json["iconData"],
       amount: json["amount"],
-      when: json["when"]
     );
   }
 }

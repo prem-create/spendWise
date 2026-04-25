@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spend_wise/core/constants/app_spacing.dart';
-import 'package:spend_wise/core/model/transaction_model.dart';
+import 'package:spend_wise/core/model/grouped_model.dart';
 import 'package:spend_wise/core/repo/global_transaction_repository.dart';
 import 'package:spend_wise/pages/transaction_page/widget/categorised_transaction_card.dart';
 
@@ -13,30 +13,11 @@ class TransactionPage extends StatefulWidget {
 
 class _TransactionPageState extends State<TransactionPage> {
   final GlobalTransactionRepository repo = GlobalTransactionRepository();
-
-  late List<TransactionModel> todayTx;
-  late List<TransactionModel> yesterdayTx;
-  late List<TransactionModel> otherTx;
-
-  void categoriseTransaction() {
-    setState(() {
-      todayTx = repo.transactions.where((tx) {
-        return tx.when == "today";
-      }).toList();
-
-      yesterdayTx = repo.transactions.where((tx) {
-        return tx.when == "yesterday";
-      }).toList();
-
-      otherTx = repo.transactions.where((tx) {
-        return tx.when == "other";
-      }).toList();
-    });
-  }
+  late final CategorisedTransactions categorisedTransactions;
 
   @override
   void initState() {
-    categoriseTransaction();
+    categorisedTransactions = repo.getCategorisedTransaction();
     super.initState();
   }
 
@@ -92,39 +73,56 @@ class _TransactionPageState extends State<TransactionPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // today
-                    if (todayTx.isNotEmpty) ...[
+                    if (categorisedTransactions.today.isNotEmpty) ...[
                       Text('Today'),
-                      ...List.generate(todayTx.length, (index) {
+                      ...List.generate(categorisedTransactions.today.length, (
+                        index,
+                      ) {
                         return CategorisedTransactionCard(
                           index: index,
-                          transactionList: todayTx,
-                          categorisedTransaction: (categoriseTransaction),
+                          transactionList: categorisedTransactions.today,
+                          categorisedTransaction: () {
+                            setState(() {
+                              categorisedTransactions = repo
+                                  .getCategorisedTransaction();
+                            });
+                          },
                         );
                       }),
                     ],
 
                     //yesterday
-                    if (yesterdayTx.isNotEmpty) ...[
+                    if (categorisedTransactions.yesterday.isNotEmpty) ...[
                       Text('Yesterday'),
                       ...List.generate(
-                        yesterdayTx.length,
+                        categorisedTransactions.yesterday.length,
                         (index) => CategorisedTransactionCard(
                           index: index,
-                          transactionList: yesterdayTx,
-                          categorisedTransaction: (categoriseTransaction),
+                          transactionList: categorisedTransactions.yesterday,
+                          categorisedTransaction: () {
+                            setState(() {
+                              categorisedTransactions = repo
+                                  .getCategorisedTransaction();
+                            });
+                          },
                         ),
                       ),
                     ],
 
                     //other
-                    if (otherTx.isNotEmpty) ...[
+                    if (categorisedTransactions.other.isNotEmpty) ...[
                       Text('other'),
                       ...List.generate(
-                        otherTx.length,
+                        categorisedTransactions.other.length,
                         (index) => CategorisedTransactionCard(
                           index: index,
-                          transactionList: otherTx,
-                          categorisedTransaction: (categoriseTransaction),
+                          transactionList: categorisedTransactions.other,
+                          categorisedTransaction: () {
+                            setState(() {
+                              categorisedTransactions = repo
+                                  .getCategorisedTransaction();
+                            });
+                          },
                         ),
                       ),
                     ],

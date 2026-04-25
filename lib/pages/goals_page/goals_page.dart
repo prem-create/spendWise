@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spend_wise/core/constants/app_spacing.dart';
-import 'package:spend_wise/core/widgets/transaction_card.dart';
+import 'package:spend_wise/core/widgets/task_card.dart';
 
 class GoalsPage extends StatefulWidget {
   const GoalsPage({super.key});
@@ -104,12 +104,12 @@ class _GoalsPageState extends State<GoalsPage> {
                   ),
                   child: Column(
                     children: [
-                      TransactionCard(
-                        // margin: EdgeInsets.all(0),
+                      Taskcard(
                         isborderedContainer: false,
                         title: "Skip Takeout Coffee",
                         iconData: Icons.coffee,
-                        time: "Make your coffee at home all week to save more.",
+                        subTitle:
+                            "Make your coffee at home all week to save more.",
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:spend_wise/core/constants/app_spacing.dart';
 
-class TransactionCard extends StatelessWidget {
+class Taskcard extends StatelessWidget {
   final String title;
   final IconData iconData;
-  final DateTime dateTime;
+  final String subTitle;
   final Widget? trailing;
   final bool isborderedContainer;
   final EdgeInsets margin;
-  const TransactionCard({
+  const Taskcard({
     super.key,
     required this.title,
     required this.iconData,
-    required this.dateTime,
+
     this.trailing,
     required this.isborderedContainer,
     this.margin = const EdgeInsets.all(AppSpacing.sm),
+    required this.subTitle,
   });
 
   @override
@@ -30,9 +31,7 @@ class TransactionCard extends StatelessWidget {
         leading: Icon(iconData),
         title: Text(title),
         titleTextStyle: Theme.of(context).textTheme.titleMedium,
-        subtitle: Text(
-          '${dateTime.day.toString()}/${dateTime.month.toString()}/${dateTime.year.toString()}',
-        ),
+        subtitle: Text(subTitle),
         subtitleTextStyle: Theme.of(context).textTheme.titleSmall,
         trailing: trailing,
       ),

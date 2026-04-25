@@ -26,16 +26,16 @@ class _CategorisedTransactionCardState
   Widget build(BuildContext context) {
     return MyDismissibleWidget(
       valuekey: ValueKey(widget.transactionList[widget.index]),
-      
+
       onDismissed: () {
-       repo.deleteTransaction(widget.transactionList[widget.index]);
-              () => widget.categorisedTransaction();
+        repo.deleteTransaction(widget.transactionList[widget.index]);
+        () => widget.categorisedTransaction();
       },
       child: TransactionCard(
         isborderedContainer: true,
         title: widget.transactionList[widget.index].title,
         iconData: widget.transactionList[widget.index].iconData,
-        time: widget.transactionList[widget.index].time,
+        dateTime: widget.transactionList[widget.index].dateTime,
         trailing: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -54,10 +54,3 @@ class _CategorisedTransactionCardState
     );
   }
 }
-
-
-
-
-
-
-
