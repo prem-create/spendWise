@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:spend_wise/core/repo/global_transaction_repository.dart';
 import 'package:spend_wise/core/widgets/transaction_card.dart';
 import 'package:spend_wise/pages/transaction_page/widget/my_dismissible_widget.dart';
+import 'package:spend_wise/repo/global_transaction_repository.dart';
 
 class CategorisedTransactionCard extends StatefulWidget {
   final int index;

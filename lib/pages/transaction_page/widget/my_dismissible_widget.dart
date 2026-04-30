@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:spend_wise/core/repo/global_transaction_repository.dart';
 import 'package:lottie/lottie.dart';
 import 'package:spend_wise/core/widgets/my_alert_dialog_widget.dart';
+import 'package:spend_wise/repo/global_transaction_repository.dart';
 
 class MyDismissibleWidget extends StatefulWidget {
   final Widget child;

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "634035102445",
+    "project_id": "spend-wise-prem",
+    "storage_bucket": "spend-wise-prem.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:634035102445:android:af221c5f657f65eba4e2e4",
+        "android_client_info": {
+          "package_name": "com.example.spend_wise"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPNuoW4WDqrZTNADmQyWMiqO7-WEg_0JU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

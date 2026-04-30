@@ -1,5 +1,5 @@
 import 'package:spend_wise/core/fake_service/dummy_transaction_data.dart';
-import 'package:spend_wise/core/model/grouped_model.dart';
+import 'package:spend_wise/core/model/categorised_transactions_model.dart';
 import 'package:spend_wise/core/model/transaction_model.dart';
 
 class GlobalTransactionRepository {
