@@ -51,7 +51,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
         builder: (context) => MyAlertDialogWidget(
           title: "OOPS!😅 You missed filing some details",
           iconData: Icons.question_mark_rounded,
-          voidCallback: () => Navigator.pop(context),
+          onOk: () => Navigator.pop(context),
         ),
       );
     } else {

@@ -45,7 +45,7 @@ class _MyDismissibleWidgetState extends State<MyDismissibleWidget> {
             iconData: Icons.delete_outline_outlined,
             title:
                 "Are you sure, you want to delete it??\n This action can't be undone!",
-            voidCallback: () {
+            onOk: () {
               Navigator.pop(context, true);
             },
           ),

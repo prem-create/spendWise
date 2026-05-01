@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:spend_wise/core/constants/app_spacing.dart';
 
 class MyAlertDialogWidget extends StatelessWidget {
   final String title;
-  final IconData iconData;
-  final VoidCallback voidCallback;
+  final Widget? content;
+  final IconData? iconData;
+  final VoidCallback onOk;
+
   const MyAlertDialogWidget({
     super.key,
     required this.title,
-    required this.iconData,
-    required this.voidCallback,
+    required this.onOk,
+    this.iconData,
+    this.content,
   });
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      icon: Icon(
-        iconData,
-        color: Theme.of(context).colorScheme.error,
-        size: AppSpacing.xxl,
-      ),
+      icon: iconData != null
+          ? Icon(iconData, size: 32)
+          : null,
       title: Text(title),
-      actions: [TextButton(onPressed: voidCallback, child: Text("Ok"))],
+      content: content,
+      actions: [
+        TextButton(onPressed: onOk, child: const Text("Ok")),
+      ],
     );
   }
 }
