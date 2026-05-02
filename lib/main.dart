@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:spend_wise/core/theme/my_theme_data.dart';
 import 'package:spend_wise/firebase_options.dart';
-import 'package:spend_wise/pages/login_page/login_page.dart';
+import 'package:spend_wise/pages/auth_pages/login_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

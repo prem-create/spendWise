@@ -14,7 +14,7 @@ class AuthCubit extends Cubit<AuthState> {
   //login
   Future<void> login(String email, String password) async {
     if (email.isEmpty || password.isEmpty) {
-      return emit(AuthError(error: "Empty Input"));
+      return emit(AuthMessage(message: "fields are empty"));
     }
 
     emit(AuthLoading());
@@ -37,10 +37,29 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  //register new account
+  Future<void> register(String email, String password) async {
+    if (email.isEmpty || password.isEmpty) {
+      emit(AuthMessage(message: "fields are empty"));
+    }
+
+    emit(AuthLoading());
+
+    try {
+      await repo.register(email, password);
+      emit(AuthSuccess());
+    } on FirebaseAuthException catch (error) {
+      log(error.code);
+      emit(AuthError(error: error.message ?? "something went wrong"));
+    } catch (error) {
+      emit(AuthError(error: error.toString()));
+    }
+  }
+
   // reset password
   Future<void> resetPassword(String email) async {
     log("reset password called");
-    if (email.isEmpty) return emit(AuthError(error: "empty email"));
+    if (email.isEmpty) return emit(AuthMessage(message: "empty email"));
 
     emit(AuthLoading());
     log("auth loading launched");
@@ -48,8 +67,7 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       await repo.resetPassword(email);
       log("success");
-      // TODO: make new state for the success message
-      emit(AuthError(error: "reset email sent"));
+      emit(AuthMessage(message: "reset email sent"));
     } on FirebaseAuthException catch (error) {
       emit(AuthError(error: error.message ?? "something went wrong"));
     } catch (error) {
